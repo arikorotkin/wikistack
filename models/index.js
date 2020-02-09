@@ -32,6 +32,12 @@ const Page = db.define('page', {
     type: Sequelize.ENUM('open', 'closed'),
     defaultValue: 'closed',
   },
+}, {
+  hooks: {
+    beforeValidate: function (page) {
+      page.slug = page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+    }
+  }
 });
 
 module.exports = { db, Page, User };

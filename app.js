@@ -6,10 +6,15 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }));
 const layout = require('./views/layout.js');
 const { db, Page, User } = require('./models');
+const userRouter = require('./routes/user');
+const wikiRouter = require('./routes/wiki');
 
 app.get('/', (req, res) => {
-  res.send(layout('My Wikipedia Article'));
+  res.redirect('/wiki');
 });
+
+app.use('/wiki', wikiRouter);
+app.use('/user', userRouter);
 
 const PORT = 1234;
 
